@@ -1,10 +1,14 @@
 package com.ebank.ebankbackend.web;
 
+import com.ebank.ebankbackend.dtos.AccountHistoryDTO;
+import com.ebank.ebankbackend.dtos.AccountOperationDTO;
 import com.ebank.ebankbackend.dtos.BankAccountDTO;
 import com.ebank.ebankbackend.exceptions.BankAccountNotFoundException;
 import com.ebank.ebankbackend.services.BankAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,8 +21,8 @@ public class BankAccountRestController {
         this.bankAccountService = bankAccountService ;
     }
 
-    @GetMapping("/account/{accountId}")
-    public BankAccountDTO getBankAccount (String accountId) throws BankAccountNotFoundException {
+    @GetMapping("/accounts/{accountId}")
+    public BankAccountDTO getBankAccount (@PathVariable String accountId) throws BankAccountNotFoundException {
         return bankAccountService.getBankAccount(accountId);
     }
 
@@ -27,4 +31,16 @@ public class BankAccountRestController {
         return bankAccountService.bankAccountList();
     }
 
+    @GetMapping("/accounts/{accountId}/operations")
+    public List<AccountOperationDTO> getHistory (@PathVariable String accountId) {
+        return bankAccountService.accountHistory(accountId) ;
+    }
+
+    @GetMapping("/accounts/{accountId}/pageOperations")
+    public AccountHistoryDTO getAccountHistory (
+            @PathVariable String accountId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size) throws BankAccountNotFoundException {
+        return bankAccountService.getAccountHistory(accountId,page,size) ;
+    }
 }
