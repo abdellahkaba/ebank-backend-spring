@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface BankAccountService {
     //Ajouter un client
-    Customer saveCustomer (Customer customer);
+    CustomerDTO saveCustomer (CustomerDTO customerDTO);
     //Ajouter un compte
     CurrentAccount saveCurrentBankAccount (double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingAccount saveSavingBankAccount (double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;

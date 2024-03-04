@@ -26,5 +26,8 @@ public class CustomerRestController {
         return bankAccountService.getCustomer(customerId);
     }
 
-
+    @PostMapping("/customers")
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO){
+      return bankAccountService.saveCustomer(customerDTO);
+    }
 }

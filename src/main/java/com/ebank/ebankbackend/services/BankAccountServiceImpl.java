@@ -32,9 +32,13 @@ public class BankAccountServiceImpl implements BankAccountService{
     private BankAccountMapperImpl dtoMapper ;
    // Logger log = LoggerFactory.getLogger(this.getClass().getName()) ;
     @Override
-    public Customer saveCustomer(Customer customer) {
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
         log.info("Saving new Customer");
-        return customerRepository.save(customer);
+        //On creer d'abord un objet Customer
+        Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
+        Customer savedCustomer = customerRepository.save(customer);
+
+        return dtoMapper.fromCustomer(savedCustomer);
     }
 
     @Override

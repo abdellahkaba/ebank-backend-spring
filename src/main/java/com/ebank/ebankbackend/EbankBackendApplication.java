@@ -1,5 +1,6 @@
 package com.ebank.ebankbackend;
 
+import com.ebank.ebankbackend.dtos.CustomerDTO;
 import com.ebank.ebankbackend.entities.*;
 import com.ebank.ebankbackend.enums.AccountStatus;
 import com.ebank.ebankbackend.enums.OperationType;
@@ -31,10 +32,10 @@ public class EbankBackendApplication {
     CommandLineRunner commandLineRunner (BankAccountService bankAccountService) {
         return args -> {
             Stream.of("Hamza","Jean","Kallo").forEach(name -> {
-                Customer customer = new Customer();
-                customer.setName(name);
-                customer.setEmail(name+"@gmail.com");
-                bankAccountService.saveCustomer(customer) ;
+                CustomerDTO customerDTO = new CustomerDTO();
+                customerDTO.setName(name);
+                customerDTO.setEmail(name+"@gmail.com");
+                bankAccountService.saveCustomer(customerDTO) ;
             });
 
             //La liste des customers
