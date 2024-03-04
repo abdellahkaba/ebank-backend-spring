@@ -1,6 +1,9 @@
 package com.ebank.ebankbackend;
 
+import com.ebank.ebankbackend.dtos.BankAccountDTO;
+import com.ebank.ebankbackend.dtos.CurrentBankAccountDTO;
 import com.ebank.ebankbackend.dtos.CustomerDTO;
+import com.ebank.ebankbackend.dtos.SavingBankAccountDTO;
 import com.ebank.ebankbackend.entities.*;
 import com.ebank.ebankbackend.enums.AccountStatus;
 import com.ebank.ebankbackend.enums.OperationType;
@@ -45,12 +48,19 @@ public class EbankBackendApplication {
                     bankAccountService.saveCurrentBankAccount(Math.random()*9000, 10000, customer.getId()) ;
                     bankAccountService.saveSavingBankAccount(Math.random()*110000,5.5, customer.getId());
                     bankAccountService.bankAccountList().forEach(account ->  {
-                        List<BankAccount> bankAccounts = bankAccountService.bankAccountList();
-                        for (BankAccount bankAccount:bankAccounts){
+                        List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
+                        for (BankAccountDTO bankAccount:bankAccounts){
                             for (int i = 0; i <5; i++){
+                                String accountId ;
+                                if (bankAccount instanceof SavingBankAccountDTO){
+                                    accountId = ((SavingBankAccountDTO) bankAccount).getId();
+                                }else {
+                                    accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+
+                                }
                                 try {
-                                    bankAccountService.credit(bankAccount.getId(),10000+Math.random()*120000,"Credit");
-                                    bankAccountService.debit(bankAccount.getId(),1000+Math.random()*7000,"Debit");
+                                    bankAccountService.credit(accountId,10000+Math.random()*120000,"Credit");
+                                    bankAccountService.debit(accountId,1000+Math.random()*7000,"Debit");
                                 } catch (BankAccountNotFoundException | BalanceNotSufficientException e) {
                                     throw new RuntimeException(e);
                                 }

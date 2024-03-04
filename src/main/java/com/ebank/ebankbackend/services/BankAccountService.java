@@ -1,6 +1,9 @@
 package com.ebank.ebankbackend.services;
 
+import com.ebank.ebankbackend.dtos.BankAccountDTO;
+import com.ebank.ebankbackend.dtos.CurrentBankAccountDTO;
 import com.ebank.ebankbackend.dtos.CustomerDTO;
+import com.ebank.ebankbackend.dtos.SavingBankAccountDTO;
 import com.ebank.ebankbackend.entities.BankAccount;
 import com.ebank.ebankbackend.entities.CurrentAccount;
 import com.ebank.ebankbackend.entities.Customer;
@@ -15,13 +18,13 @@ public interface BankAccountService {
     //Ajouter un client
     CustomerDTO saveCustomer (CustomerDTO customerDTO);
     //Ajouter un compte
-    CurrentAccount saveCurrentBankAccount (double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
-    SavingAccount saveSavingBankAccount (double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
+    CurrentBankAccountDTO saveCurrentBankAccount (double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
+    SavingBankAccountDTO saveSavingBankAccount (double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
 
     //Une methode qui consule la liste des clients
     List<CustomerDTO> listCustomers () ;
     //Une methode qui consulte un compte
-    BankAccount getBankAccount (String accountId) throws BankAccountNotFoundException;
+    BankAccountDTO getBankAccount (String accountId) throws BankAccountNotFoundException;
     //Pour debiter un compte
     void debit (String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
     //Pour crediter un compte
@@ -29,7 +32,7 @@ public interface BankAccountService {
     //Transferer un compte
     void transfert (String accountIdSource, String accountIdDescription, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
 
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 
