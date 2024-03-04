@@ -30,7 +30,7 @@ public class EbankBackendApplication {
     @Bean
     CommandLineRunner commandLineRunner (BankAccountService bankAccountService) {
         return args -> {
-            Stream.of("Hamza","Jean","Kallo","Kadija").forEach(name -> {
+            Stream.of("Hamza","Jean","Kallo").forEach(name -> {
                 Customer customer = new Customer();
                 customer.setName(name);
                 customer.setEmail(name+"@gmail.com");
@@ -46,7 +46,7 @@ public class EbankBackendApplication {
                     bankAccountService.bankAccountList().forEach(account ->  {
                         List<BankAccount> bankAccounts = bankAccountService.bankAccountList();
                         for (BankAccount bankAccount:bankAccounts){
-                            for (int i = 0; i <10; i++){
+                            for (int i = 0; i <5; i++){
                                 try {
                                     bankAccountService.credit(bankAccount.getId(),10000+Math.random()*120000,"Credit");
                                     bankAccountService.debit(bankAccount.getId(),1000+Math.random()*7000,"Debit");

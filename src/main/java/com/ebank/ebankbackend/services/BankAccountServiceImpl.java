@@ -1,10 +1,12 @@
 package com.ebank.ebankbackend.services;
 
+import com.ebank.ebankbackend.dtos.CustomerDTO;
 import com.ebank.ebankbackend.entities.*;
 import com.ebank.ebankbackend.enums.OperationType;
 import com.ebank.ebankbackend.exceptions.BalanceNotSufficientException;
 import com.ebank.ebankbackend.exceptions.BankAccountNotFoundException;
 import com.ebank.ebankbackend.exceptions.CustomerNotFoundException;
+import com.ebank.ebankbackend.mappers.BankAccountMapperImpl;
 import com.ebank.ebankbackend.repositories.AccountOperationRepository;
 import com.ebank.ebankbackend.repositories.BankAccountRepository;
 import com.ebank.ebankbackend.repositories.CustomerRepository;
@@ -13,9 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,6 +30,7 @@ public class BankAccountServiceImpl implements BankAccountService{
     private CustomerRepository customerRepository;
     private BankAccountRepository bankAccountRepository;
     private AccountOperationRepository accountOperationRepository;
+    private BankAccountMapperImpl dtoMapper ;
    // Logger log = LoggerFactory.getLogger(this.getClass().getName()) ;
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -63,10 +68,27 @@ public class BankAccountServiceImpl implements BankAccountService{
         return bankAccountRepository.save(savingAccount) ;
     }
 
-
+    /*Une methode qui permet de tranferer une liste de customer vers une liste de
+    de customerDTO*/
     @Override
-    public List<Customer> listCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        //Pour chaque customer on genere un objet customerDTO
+        /**
+         * Programmation fonctionnelle en utilisant les stream
+        */
+        List<CustomerDTO> customerDTOS = customers.stream().map(customer -> dtoMapper.fromCustomer(customer)).collect(Collectors.toList());
+
+        /* Programation Imperative
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
+        for (Customer customer:customers){
+            //on creer un objet CustomerDTO
+            CustomerDTO  customerDTO = dtoMapper.fromCustomer(customer);
+            customerDTOS.add(customerDTO);
+        }*/
+
+        return customerDTOS ;
+
     }
 
     @Override

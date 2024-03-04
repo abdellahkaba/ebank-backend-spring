@@ -1,5 +1,6 @@
 package com.ebank.ebankbackend.services;
 
+import com.ebank.ebankbackend.dtos.CustomerDTO;
 import com.ebank.ebankbackend.entities.BankAccount;
 import com.ebank.ebankbackend.entities.CurrentAccount;
 import com.ebank.ebankbackend.entities.Customer;
@@ -18,7 +19,7 @@ public interface BankAccountService {
     SavingAccount saveSavingBankAccount (double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
 
     //Une methode qui consule la liste des clients
-    List<Customer> listCustomers () ;
+    List<CustomerDTO> listCustomers () ;
     //Une methode qui consulte un compte
     BankAccount getBankAccount (String accountId) throws BankAccountNotFoundException;
     //Pour debiter un compte
