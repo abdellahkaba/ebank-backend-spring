@@ -210,16 +210,23 @@ public class BankAccountServiceImpl implements BankAccountService{
     public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
        BankAccount bankAccount = bankAccountRepository.findById(accountId).orElse(null) ;
        if (bankAccount == null) throw  new BankAccountNotFoundException("Account not found");
-        Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId, PageRequest.of(page,size)) ;
-        AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO() ;
-        List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
-        accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
-        accountHistoryDTO.setAccountId(bankAccount.getId());
-        accountHistoryDTO.setBalance(bankAccount.getBalance());
-        accountHistoryDTO.setCurrentPage(page);
-        accountHistoryDTO.setPageSize(size);
-        accountHistoryDTO.setTotalPages(accountOperations.getTotalPages());
-        return accountHistoryDTO ;
+       Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId, PageRequest.of(page,size)) ;
+       AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO() ;
+       List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
+       accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
+       accountHistoryDTO.setAccountId(bankAccount.getId());
+       accountHistoryDTO.setBalance(bankAccount.getBalance());
+       accountHistoryDTO.setCurrentPage(page);
+       accountHistoryDTO.setPageSize(size);
+       accountHistoryDTO.setTotalPages(accountOperations.getTotalPages());
+       return accountHistoryDTO ;
 
+    }
+
+    @Override
+    public List<CustomerDTO> searchCustomers(String keyword) {
+        List<Customer> customers = customerRepository.findByNameContains(keyword);
+        List<CustomerDTO> listCustomerDTO = customers.stream().map(customer -> dtoMapper.fromCustomer(customer)).collect(Collectors.toList());
+        return listCustomerDTO;
     }
 }
