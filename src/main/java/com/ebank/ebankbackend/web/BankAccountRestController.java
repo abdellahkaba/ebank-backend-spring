@@ -6,14 +6,12 @@ import com.ebank.ebankbackend.dtos.BankAccountDTO;
 import com.ebank.ebankbackend.exceptions.BankAccountNotFoundException;
 import com.ebank.ebankbackend.services.BankAccountService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("*") //autorisation d'envoie de requete
 
 public class BankAccountRestController {
     private BankAccountService bankAccountService ;

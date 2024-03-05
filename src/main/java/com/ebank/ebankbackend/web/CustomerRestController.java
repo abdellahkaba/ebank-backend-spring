@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin("*") // autorisation d'envoi de requete
 public class CustomerRestController {
 
     private BankAccountService bankAccountService ;
