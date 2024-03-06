@@ -1,10 +1,6 @@
 package com.ebank.ebankbackend.services;
 
 import com.ebank.ebankbackend.dtos.*;
-import com.ebank.ebankbackend.entities.BankAccount;
-import com.ebank.ebankbackend.entities.CurrentAccount;
-import com.ebank.ebankbackend.entities.Customer;
-import com.ebank.ebankbackend.entities.SavingAccount;
 import com.ebank.ebankbackend.exceptions.BalanceNotSufficientException;
 import com.ebank.ebankbackend.exceptions.BankAccountNotFoundException;
 import com.ebank.ebankbackend.exceptions.CustomerNotFoundException;

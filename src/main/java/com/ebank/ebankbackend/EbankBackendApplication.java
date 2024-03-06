@@ -14,7 +14,6 @@ import com.ebank.ebankbackend.repositories.AccountOperationRepository;
 import com.ebank.ebankbackend.repositories.BankAccountRepository;
 import com.ebank.ebankbackend.repositories.CustomerRepository;
 import com.ebank.ebankbackend.services.BankAccountService;
-import com.ebank.ebankbackend.services.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -66,7 +65,7 @@ public class EbankBackendApplication {
                     }
                     try {
                         bankAccountService.credit(accountId,10000+Math.random()*120000,"Credit");
-                        bankAccountService.debit(accountId,1000+Math.random()*7000,"Debit");
+                        bankAccountService.debit(accountId,1000+Math.random()*7000, "Debit");
                     } catch (BankAccountNotFoundException | BalanceNotSufficientException e) {
                         throw new RuntimeException(e);
                     }
