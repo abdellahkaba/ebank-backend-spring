@@ -50,7 +50,7 @@ public class EbankBackendApplication {
                 } catch (CustomerNotFoundException e) {
                    e.printStackTrace();
                 }
-
+                
 
             });
             List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
@@ -87,7 +87,7 @@ public class EbankBackendApplication {
                 customer.setName(name);
                 customer.setEmail(name+"@gmail.com");
                 customerRepository.save(customer);
-            });
+            }); 
             customerRepository.findAll().forEach(cust -> {
                 CurrentAccount currentAccount = new CurrentAccount();
                 currentAccount.setId(UUID.randomUUID().toString());

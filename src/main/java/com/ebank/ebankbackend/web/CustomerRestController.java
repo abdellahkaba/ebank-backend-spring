@@ -32,7 +32,6 @@ public class CustomerRestController {
     public CustomerDTO getCustomer(@PathVariable(name = "id") Long customerId) throws CustomerNotFoundException {
         return bankAccountService.getCustomer(customerId);
     }
-
     @PostMapping("/customers")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
       return bankAccountService.saveCustomer(customerDTO);
