@@ -20,16 +20,19 @@ public class CustomerRestController {
     private BankAccountService bankAccountService ;
 
     @GetMapping("/customers")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<CustomerDTO> customers () {
         return bankAccountService.listCustomers() ;
     }
 
     @GetMapping("/customers/search")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<CustomerDTO> searchCustomers (@RequestParam(name = "keyword", defaultValue = "") String keyword ) {
 
         return bankAccountService.searchCustomers("%"+keyword+"%") ;
     }
     @GetMapping("/customers/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public CustomerDTO getCustomer(@PathVariable(name = "id") Long customerId) throws CustomerNotFoundException {
         return bankAccountService.getCustomer(customerId);
     }
